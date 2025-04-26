@@ -13,6 +13,9 @@ extern unsigned long long common_ticktime__;
 #include "POUS.h"
 
 #include "Config0.h"
+__DECLARE_GLOBAL(__ARRAY_OF_DINT_4,RES0,MATRIX_A)
+__DECLARE_GLOBAL(__ARRAY_OF_DINT_4,RES0,MATRIX_B)
+__DECLARE_GLOBAL(__ARRAY_OF_DINT_4,RES0,MATRIX_C)
 
 #include "POUS.c"
 
@@ -23,7 +26,9 @@ MATRIX_MUL RES0__INSTANCE0;
 void RES0_init__(void) {
   BOOL retain;
   retain = 0;
-  
+  __INIT_GLOBAL(__ARRAY_OF_DINT_4,MATRIX_A,__INITIAL_VALUE({{1,2,3,4}}),retain)
+  __INIT_GLOBAL(__ARRAY_OF_DINT_4,MATRIX_B,__INITIAL_VALUE({{1,2,3,4}}),retain)
+  __INIT_GLOBAL(__ARRAY_OF_DINT_4,MATRIX_C,__INITIAL_VALUE({{0,0,0,0}}),retain)
   TASK0 = __BOOL_LITERAL(FALSE);
   MATRIX_MUL_init__(&INSTANCE0,retain);
 }

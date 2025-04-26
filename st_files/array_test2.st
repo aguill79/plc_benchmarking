@@ -58,29 +58,7 @@ PROGRAM matrix_mul
     element_selector0 : matrix_one;
     element_selector1 : matrix_two;
     matrix_C0 : matrix_output;
-  END_VAR
-  VAR
-    current_time AT %ML1024 : ULINT;
-  END_VAR
-  VAR
-    start_time : DT;
-    stop_time : DT;
-  END_VAR
-  VAR
-    elapsed_time AT %ML2 : LREAL;
-  END_VAR
-  VAR
-    rec_time : BOOL := true;
-    RTC0 : RTC;
-    RTC1 : RTC;
     _TMP_MUL11_OUT : DINT;
-    _TMP_DT_TO_LREAL30_OUT : LREAL;
-    _TMP_DT_TO_LREAL21_OUT : LREAL;
-    _TMP_SUB25_OUT : LREAL;
-    _TMP_INT_TO_DT35_OUT : DT;
-    _TMP_MOVE29_OUT : DT;
-    _TMP_INT_TO_DT14_OUT : DT;
-    _TMP_MOVE19_OUT : DT;
   END_VAR
 
   element_selector0(index := 0);
@@ -89,24 +67,6 @@ PROGRAM matrix_mul
   element_b := element_selector1.out;
   _TMP_MUL11_OUT := MUL(element_a, element_b);
   element_c := _TMP_MUL11_OUT;
-  RTC0(EN := rec_time);
-  IF RTC0.ENO THEN
-      start_time := RTC0.CDT;
-  END_IF;
-  _TMP_DT_TO_LREAL30_OUT := DT_TO_LREAL(stop_time);
-  _TMP_DT_TO_LREAL21_OUT := DT_TO_LREAL(start_time);
-  _TMP_SUB25_OUT := SUB(_TMP_DT_TO_LREAL30_OUT, _TMP_DT_TO_LREAL21_OUT);
-  elapsed_time := _TMP_SUB25_OUT;
-  RTC1(EN := rec_time);
-  IF RTC1.ENO THEN
-      stop_time := RTC1.CDT;
-  END_IF;
-  _TMP_INT_TO_DT35_OUT := INT_TO_DT(0);
-  _TMP_MOVE29_OUT := MOVE(_TMP_INT_TO_DT35_OUT);
-  start_time := _TMP_MOVE29_OUT;
-  _TMP_INT_TO_DT14_OUT := INT_TO_DT(0);
-  _TMP_MOVE19_OUT := MOVE(_TMP_INT_TO_DT14_OUT);
-  stop_time := _TMP_MOVE19_OUT;
   matrix_C0(index := 0, value := element_c);
 END_PROGRAM
 
@@ -119,7 +79,8 @@ CONFIGURATION Config0
       matrix_B : input_matrix;
       matrix_C : output_matrix;
     END_VAR
-    TASK task0(INTERVAL := T#10ms,PRIORITY := 0);
+    TASK task0(INTERVAL := T#20ms,PRIORITY := 0);
     PROGRAM instance0 WITH task0 : matrix_mul;
   END_RESOURCE
 END_CONFIGURATION
+

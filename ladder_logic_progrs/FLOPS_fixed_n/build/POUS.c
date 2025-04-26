@@ -133,6 +133,19 @@ static inline DINT __FLOPS_MOVE__DINT__DINT6(BOOL EN,
   return __res;
 }
 
+static inline BOOL __FLOPS_MOVE__BOOL__BOOL7(BOOL EN,
+  BOOL IN,
+  FLOPS *data__)
+{
+  BOOL __res;
+  BOOL __TMP_ENO = __GET_VAR(data__->_TMP_MOVE42_ENO,);
+  __res = MOVE__BOOL__BOOL(EN,
+    &__TMP_ENO,
+    IN);
+  __SET_VAR(,data__->_TMP_MOVE42_ENO,,__TMP_ENO);
+  return __res;
+}
+
 void FLOPS_init__(FLOPS *data__, BOOL retain) {
   __INIT_VAR(data__->COUNT,0,retain)
   __INIT_VAR(data__->NUM_OPS,200,retain)
@@ -140,6 +153,12 @@ void FLOPS_init__(FLOPS *data__, BOOL retain) {
   __INIT_VAR(data__->RUN_FLAG,__BOOL_LITERAL(TRUE),retain)
   __INIT_VAR(data__->RESET,__BOOL_LITERAL(TRUE),retain)
   __INIT_VAR(data__->RUN_STATUS,__BOOL_LITERAL(FALSE),retain)
+  __INIT_VAR(data__->START_TIME,__dt_to_timespec(0, 0, 0, 1, 1, 1970),retain)
+  __INIT_VAR(data__->STOP_TIME,__dt_to_timespec(0, 0, 0, 1, 1, 1970),retain)
+  __INIT_VAR(data__->ELAPSED_TIME,0,retain)
+  __INIT_VAR(data__->RECORD_TIME,__BOOL_LITERAL(TRUE),retain)
+  RTC_init__(&data__->RTC0,retain);
+  RTC_init__(&data__->RTC1,retain);
   __INIT_VAR(data__->_TMP_MUL2_ENO,__BOOL_LITERAL(FALSE),retain)
   __INIT_VAR(data__->_TMP_MUL2_OUT,0,retain)
   __INIT_VAR(data__->_TMP_SUB7_ENO,__BOOL_LITERAL(FALSE),retain)
@@ -152,6 +171,11 @@ void FLOPS_init__(FLOPS *data__, BOOL retain) {
   __INIT_VAR(data__->_TMP_LE18_OUT,__BOOL_LITERAL(FALSE),retain)
   __INIT_VAR(data__->_TMP_MOVE28_ENO,__BOOL_LITERAL(FALSE),retain)
   __INIT_VAR(data__->_TMP_MOVE28_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_DT_TO_LREAL37_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_DT_TO_LREAL39_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_SUB36_OUT,0,retain)
+  __INIT_VAR(data__->_TMP_MOVE42_ENO,__BOOL_LITERAL(FALSE),retain)
+  __INIT_VAR(data__->_TMP_MOVE42_OUT,__BOOL_LITERAL(FALSE),retain)
 }
 
 // Code part
@@ -210,6 +234,40 @@ void FLOPS_body__(FLOPS *data__) {
   __SET_VAR(data__->,RUN_STATUS,,__GET_VAR(data__->_TMP_SUB7_ENO,));
   if (__GET_VAR(data__->_TMP_LE18_OUT,)) {
     __SET_VAR(data__->,RUN_STATUS,,__BOOL_LITERAL(FALSE));
+  };
+  __SET_VAR(data__->RTC0.,EN,,(__GET_VAR(data__->RECORD_TIME,) && __GET_VAR(data__->RUN_FLAG,)));
+  RTC_body__(&data__->RTC0);
+  if (__GET_VAR(data__->RTC0.ENO,)) {
+    __SET_VAR(data__->,START_TIME,,__GET_VAR(data__->RTC0.CDT,));
+  };
+  __SET_VAR(data__->RTC1.,EN,,(__GET_VAR(data__->RECORD_TIME,) && __GET_VAR(data__->RUN_FLAG,)));
+  RTC_body__(&data__->RTC1);
+  if (__GET_VAR(data__->RTC1.ENO,)) {
+    __SET_VAR(data__->,STOP_TIME,,__GET_VAR(data__->RTC1.CDT,));
+  };
+  __SET_VAR(data__->,_TMP_DT_TO_LREAL37_OUT,,DT_TO_LREAL(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (DT)__GET_VAR(data__->STOP_TIME,)));
+  __SET_VAR(data__->,_TMP_DT_TO_LREAL39_OUT,,DT_TO_LREAL(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (DT)__GET_VAR(data__->START_TIME,)));
+  __SET_VAR(data__->,_TMP_SUB36_OUT,,SUB__LREAL__LREAL__LREAL(
+    (BOOL)__BOOL_LITERAL(TRUE),
+    NULL,
+    (LREAL)__GET_VAR(data__->_TMP_DT_TO_LREAL37_OUT,),
+    (LREAL)__GET_VAR(data__->_TMP_DT_TO_LREAL39_OUT,)));
+  __SET_VAR(data__->,ELAPSED_TIME,,__GET_VAR(data__->_TMP_SUB36_OUT,));
+  __SET_VAR(data__->,_TMP_MOVE42_OUT,,__FLOPS_MOVE__BOOL__BOOL7(
+    (BOOL)__GET_VAR(data__->RUN_FLAG,),
+    (BOOL)__BOOL_LITERAL(FALSE),
+    data__));
+  if (__GET_VAR(data__->_TMP_MOVE42_ENO,)) {
+    __SET_VAR(data__->,RECORD_TIME,,__GET_VAR(data__->_TMP_MOVE42_OUT,));
+  };
+  if (__GET_VAR(data__->_TMP_MOVE28_ENO,)) {
+    __SET_VAR(data__->,RECORD_TIME,,__BOOL_LITERAL(TRUE));
   };
 
   goto __end;

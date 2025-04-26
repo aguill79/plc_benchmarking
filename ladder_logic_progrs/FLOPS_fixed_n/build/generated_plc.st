@@ -8,6 +8,12 @@ PROGRAM FLOPS
     run_status AT %QX0.0 : BOOL := false;
   END_VAR
   VAR
+    start_time : DT;
+    stop_time : DT;
+    elapsed_time : LREAL;
+    record_time : BOOL := true;
+    RTC0 : RTC;
+    RTC1 : RTC;
     _TMP_MUL2_ENO : BOOL;
     _TMP_MUL2_OUT : REAL;
     _TMP_SUB7_ENO : BOOL;
@@ -20,6 +26,11 @@ PROGRAM FLOPS
     _TMP_LE18_OUT : BOOL;
     _TMP_MOVE28_ENO : BOOL;
     _TMP_MOVE28_OUT : DINT;
+    _TMP_DT_TO_LREAL37_OUT : LREAL;
+    _TMP_DT_TO_LREAL39_OUT : LREAL;
+    _TMP_SUB36_OUT : LREAL;
+    _TMP_MOVE42_ENO : BOOL;
+    _TMP_MOVE42_OUT : BOOL;
   END_VAR
 
   _TMP_MUL2_OUT := MUL(EN := run_flag, IN1 := product, IN2 := 5.0, ENO => _TMP_MUL2_ENO);
@@ -49,6 +60,25 @@ PROGRAM FLOPS
   run_status := _TMP_SUB7_ENO;
   IF _TMP_LE18_OUT THEN
     run_status := FALSE; (*reset*)
+  END_IF;
+  RTC0(EN := record_time AND run_flag);
+  IF RTC0.ENO THEN
+      start_time := RTC0.CDT;
+  END_IF;
+  RTC1(EN := record_time AND run_flag);
+  IF RTC1.ENO THEN
+      stop_time := RTC1.CDT;
+  END_IF;
+  _TMP_DT_TO_LREAL37_OUT := DT_TO_LREAL(stop_time);
+  _TMP_DT_TO_LREAL39_OUT := DT_TO_LREAL(start_time);
+  _TMP_SUB36_OUT := SUB(_TMP_DT_TO_LREAL37_OUT, _TMP_DT_TO_LREAL39_OUT);
+  elapsed_time := _TMP_SUB36_OUT;
+  _TMP_MOVE42_OUT := MOVE(EN := run_flag, IN := false, ENO => _TMP_MOVE42_ENO);
+  IF _TMP_MOVE42_ENO THEN
+      record_time := _TMP_MOVE42_OUT;
+  END_IF;
+  IF _TMP_MOVE28_ENO THEN
+    record_time := TRUE; (*set*)
   END_IF;
 END_PROGRAM
 
