@@ -36,8 +36,8 @@ typedef struct {
 
   // PROGRAM private variables - TEMP, private and located variables
   __DECLARE_VAR(REAL,PRODUCT)
-  __DECLARE_VAR(INT,NUM_OPS)
   __DECLARE_VAR(INT,COUNT)
+  __DECLARE_VAR(INT,NUM_OPS)
   __DECLARE_VAR(BOOL,RUN_FLAG)
   __DECLARE_VAR(BOOL,RESET)
   __DECLARE_VAR(BOOL,RUN_STATUS)

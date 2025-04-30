@@ -24,8 +24,8 @@ END_FUNCTION_BLOCK
 PROGRAM FLOPS
   VAR
     product : REAL := 1.0;
-    num_ops : INT := 200;
     count : INT := 0;
+    num_ops : INT := 200;
     run_flag : BOOL := false;
     reset : BOOL := true;
     run_status : BOOL := false;
@@ -58,7 +58,7 @@ PROGRAM FLOPS
   IF _TMP_MOVE15_ENO THEN
       product := _TMP_MOVE15_OUT;
   END_IF;
-  _TMP_LE18_OUT := LE(EN := run_flag, IN1 := count, IN2 := 0, ENO => _TMP_LE18_ENO);
+  _TMP_LE18_OUT := LE(EN := run_flag, IN1 := count, IN2 := 1, ENO => _TMP_LE18_ENO);
   IF _TMP_LE18_OUT THEN
     run_flag := FALSE; (*reset*)
   END_IF;
@@ -79,7 +79,7 @@ END_PROGRAM
 CONFIGURATION Config0
 
   RESOURCE Res0 ON PLC
-    TASK task0(INTERVAL := T#0.5ms,PRIORITY := 0);
+    TASK task0(INTERVAL := T#5ms,PRIORITY := 0);
     PROGRAM instance0 WITH task0 : FLOPS;
   END_RESOURCE
 END_CONFIGURATION

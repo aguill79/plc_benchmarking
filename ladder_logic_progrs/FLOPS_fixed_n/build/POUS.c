@@ -135,8 +135,8 @@ static inline INT __FLOPS_MOVE__INT__INT6(BOOL EN,
 
 void FLOPS_init__(FLOPS *data__, BOOL retain) {
   __INIT_VAR(data__->PRODUCT,1.0,retain)
-  __INIT_VAR(data__->NUM_OPS,200,retain)
   __INIT_VAR(data__->COUNT,0,retain)
+  __INIT_VAR(data__->NUM_OPS,200,retain)
   __INIT_VAR(data__->RUN_FLAG,__BOOL_LITERAL(FALSE),retain)
   __INIT_VAR(data__->RESET,__BOOL_LITERAL(TRUE),retain)
   __INIT_VAR(data__->RUN_STATUS,__BOOL_LITERAL(FALSE),retain)
@@ -192,7 +192,7 @@ void FLOPS_body__(FLOPS *data__) {
     (BOOL)__GET_VAR(data__->RUN_FLAG,),
     (UINT)2,
     (INT)__GET_VAR(data__->COUNT,),
-    (INT)0,
+    (INT)1,
     data__));
   if (__GET_VAR(data__->_TMP_LE18_OUT,)) {
     __SET_VAR(data__->,RUN_FLAG,,__BOOL_LITERAL(FALSE));

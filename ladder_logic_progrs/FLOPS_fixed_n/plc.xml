@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <project xmlns="http://www.plcopen.org/xml/tc6_0201" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:ns1="http://www.plcopen.org/xml/tc6_0201">
   <fileHeader companyName="Unknown" productName="Unnamed" productVersion="1" creationDateTime="2025-04-12T20:42:18"/>
-  <contentHeader name="Unnamed" modificationDateTime="2025-04-28T15:23:07">
+  <contentHeader name="Unnamed" modificationDateTime="2025-04-29T16:09:43">
     <coordinateInfo>
       <fbd>
         <scaling x="10" y="10"/>
@@ -28,20 +28,20 @@
                 <simpleValue value="1.0"/>
               </initialValue>
             </variable>
-            <variable name="num_ops" address="%IW0">
-              <type>
-                <INT/>
-              </type>
-              <initialValue>
-                <simpleValue value="200"/>
-              </initialValue>
-            </variable>
             <variable name="count" address="%QW0">
               <type>
                 <INT/>
               </type>
               <initialValue>
                 <simpleValue value="0"/>
+              </initialValue>
+            </variable>
+            <variable name="num_ops" address="%QW1">
+              <type>
+                <INT/>
+              </type>
+              <initialValue>
+                <simpleValue value="200"/>
               </initialValue>
             </variable>
             <variable name="run_flag" address="%IX0.0">
